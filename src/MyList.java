@@ -16,15 +16,20 @@ public class MyList<E> {
 
     // Thêm phần tử vào vị trí index trong mảng
     void add(int index, E element){
-        if (index <0||index>=size) {
+        if (index == 0) {
+            add(element);
+            return;
+        }
+        if (index <0||index>size) {
             throw new ArrayIndexOutOfBoundsException(); //Thông báo lỗi
         }else{
             ensureCapacity();// hàm kiểm tra kích thước lý thuyết và kích thước thực tế của mảng
             Object temp = elements[index];
             elements[index] = element;
             for (int i = index+1; i < size+1; i++) {
+                Object tempNext= elements[i];
                 elements[i]= temp;
-                temp= elements[i+1];
+                temp= tempNext;
             }
             size++;
         }
@@ -36,7 +41,7 @@ public class MyList<E> {
             throw new ArrayIndexOutOfBoundsException("Index: "+ index+ " Actual size: "+ size);// thông báo lỗi
         }else{
             Object deleteElements= elements[index];
-            for (int i = index; i <size ; i++) {
+            for (int i = index; i <size-1 ; i++) {
                 //dùng để dịch phần tử sau index về index-1
                 elements[i]= elements[i+1];
 
